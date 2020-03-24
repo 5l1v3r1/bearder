@@ -37,11 +37,14 @@ export default class TextButton extends React.Component
 const styles = StyleSheet.create({
   container: {
     width: '70%',
-    height: '10%',
+    height: 70,
     backgroundColor: '#c70082',
     flexDirection: 'row',
     alignItems: 'center',
-
+    marginTop: 15,
+    marginRight: 15,
+    marginLeft: 15,
+    marginBottom: 15,
   },
   opacity: {
     flexDirection: 'row',
