@@ -7,27 +7,21 @@ export default class TextField extends React.Component
   constructor(props) {
     super(props);
     this.state = {
-      func: undefined
+      type: 'default'
     };
 
-    this.noFunction = this.noFunction.bind(this);
-    if (this.props.run === undefined) {
-      this.state.func = this.noFunction;
-    } else {
-      this.state.func = this.props.run;
+    if (this.props.type !== undefined) {
+      this.state.type = this.props.type;
     }
-  }
-
-  noFunction(dat) {
-    console.log("Text changed: ", dat);
   }
 
   render() {
     return (
         <View style={styles.container}>
           <TextInput style={styles.input}
-            onChangeText={this.state.func}
+            onChangeText={this.props.run}
             placeholder={this.props.text}
+            keyboardType={this.state.type}
           />
         </View>
     );

@@ -6,28 +6,14 @@ export default class TextButton extends React.Component
 {
   constructor(props) {
     super(props);
-    this.state = {
-      func: undefined
-    };
-
-    this.noFunction = this.noFunction.bind(this);
-    if (this.props.run === undefined) {
-      this.state.func = this.noFunction;
-    } else {
-      this.state.func = this.props.run;
-    }
-  }
-
-  noFunction() {
-    alert("TESTING");
   }
 
   render() {
     return (
         <View style={styles.container}>
-          <TouchableOpacity style={styles.opacity} onPress={this.state.func}>
+          <TouchableOpacity style={styles.opacity} onPress={this.props.run}>
             <Text style={styles.buttonText}>{this.props.text}</Text>
-            <Image style={styles.buttonNext} source={require('../assets/images/buttons/next_white.png')} />
+            <Image style={styles.buttonNext} source={require('./../../assets/images/buttons/next_white.png')} />
           </TouchableOpacity>
         </View>
     );
