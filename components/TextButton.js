@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     paddingLeft: '15%',
-    paddingRight: '30%',
+    paddingRight: 50,
     color: "#FFFFFF",
     fontSize: 45,
   },
