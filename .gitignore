@@ -12,6 +12,7 @@
 
 # Generated files
 node_modules/
+.expo/
 bin/
 gen/
 out/
