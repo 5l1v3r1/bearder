@@ -28,7 +28,7 @@ export default class HelpField extends React.Component
           onRequestClose={() => {
             this.displayModal(false);
         }}>
-          <WebView source={{ uri: 'https://p4p1.github.io/' }} />
+          <WebView source={{ uri: 'https://p4p1.github.io/bearder' }} />
         </Modal>
         <View style={styles.container}>
           <TouchableOpacity onPress={() => {this.displayModal(true)}}>
