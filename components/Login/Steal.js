@@ -19,6 +19,7 @@ export default class Steal extends React.Component
   forceAuth(val) {
     alert("Xauth set to: " + val);
     global.xauth=val;
+    this.props.refresh();
   }
   setXauth(dat) {
     this.setState({xauth_str: dat});

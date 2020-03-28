@@ -19,9 +19,9 @@ export default class LoginScreen extends React.Component
     var form;
 
     if (this.state.xauth == false) {
-      form = <Form />;
+      form = <Form refresh={this.props.refresh}/>;
     } else {
-      form = <Steal />;
+      form = <Steal refresh={this.props.refresh}/>;
     }
 
     return (

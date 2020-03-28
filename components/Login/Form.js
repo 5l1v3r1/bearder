@@ -26,6 +26,7 @@ export default class Form extends React.Component
   sendSmsCode(dat) {
     console.log("number", this.state.number, "code", dat);
     global.xauth="something";
+    this.props.refresh();
   }
 
   handleNumber(num) {
