@@ -18,3 +18,8 @@ I built back in december called [tinder_0d](https://github.com/p4p1/tinder_0d).
 Check it out. [Bearder webpage](https://p4p1.github.io/bearder/)
 
 ## Screen-shots
+
+![Login_page](https://raw.githubusercontent.com/p4p1/bearder/master/assets/login.jpg)
+![sms_code](https://raw.githubusercontent.com/p4p1/bearder/master/assets/sms_code.jpg)
+![Main_page](https://raw.githubusercontent.com/p4p1/bearder/master/assets/main_page.jpg)
+![on_match](https://raw.githubusercontent.com/p4p1/bearder/master/assets/match.jpg)
