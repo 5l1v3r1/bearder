@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 19272,
-  "expoServerNgrokUrl": "https://w6-ftw.anonymous.bearder.exp.direct",
-  "packagerNgrokUrl": "https://packager.3t-8zv.anonymous.bearder.exp.direct",
-  "ngrokPid": 19484
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

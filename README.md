@@ -11,3 +11,10 @@ Link: https://p4p1.github.io/bearder/
 # Bearder
 
 ![bearder_icon](https://raw.githubusercontent.com/p4p1/bearder/master/assets/images/icon.png)
+
+An open source lightweight tinder frontend. I built this to train with API's and
+large amount of json data. This project is based on a chrome web browser pluggin
+I built back in december called [tinder_0d](https://github.com/p4p1/tinder_0d).
+Check it out. [Bearder webpage](https://p4p1.github.io/bearder/)
+
+## Screen-shots
