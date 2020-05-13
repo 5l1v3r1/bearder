@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { TextInput, StyleSheet, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 
 export default class TextField extends React.Component
 {

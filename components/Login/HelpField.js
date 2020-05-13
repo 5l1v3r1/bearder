@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Modal } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
 
 export default class HelpField extends React.Component

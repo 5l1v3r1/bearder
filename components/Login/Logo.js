@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 
 export default class Logo extends React.Component
 {
