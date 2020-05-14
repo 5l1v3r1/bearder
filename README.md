@@ -9,6 +9,8 @@ Link: https://p4p1.github.io/bearder/
 -->
 
 # Bearder
+![GitHub All Releases](https://img.shields.io/github/downloads/p4p1/bearder/total)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/p4p1/bearder?color=%23c70082)
 
 ![bearder_icon](https://raw.githubusercontent.com/p4p1/bearder/master/assets/images/icon.png)
 
