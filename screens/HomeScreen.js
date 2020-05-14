@@ -1,9 +1,10 @@
 'use strict';
 
 import React from 'react';
-import {StyleSheet, Text, View, ImageBackground, Modal, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, AsyncStorage, View, Image, ImageBackground, Modal, TouchableOpacity, ScrollView} from 'react-native';
 
 import SwipeCards from 'react-native-swipe-cards';
+
 
 import Likes from '../components/card/Likes';
 
@@ -17,6 +18,7 @@ export class Card extends React.Component {
     this.setModal = this.setModal.bind(this);
     this.next_img = this.next_img.bind(this);
     this.prev_img = this.prev_img.bind(this);
+    this._storeData = this._storeData.bind(this);
   }
 
   setModal(val) {
@@ -34,29 +36,55 @@ export class Card extends React.Component {
       this.setState({current_img_id: this.state.current_img_id-1});
     }
   }
+  _storeData = async () => {
+    try {
+      await AsyncStorage.setItem(
+        `@${this.props.name}`,
+        this.props.id
+      );
+    } catch (error) {
+      // Error saving data
+      console.log(error);
+    }
+    try {
+      const value = await AsyncStorage.getItem(this.props.name);
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log("Fuck2");
+    }
+  };
 
   render() {
     return (
       <View>
         <Modal
           animationType="slide"
-          transparent={true}
           visible={this.state.modalVisible}
           onRequestClose={() => {
             this.setModal(false);
           }}
+          transparent={true}
         >
           <View style={styles.containerModal}>
-            <View style={styles.Modal}>
+            <ScrollView style={styles.Modal}>
               <ImageBackground style={styles.thumbnailModal} source={{uri: this.props.id.user.photos[this.state.current_img_id].processedFiles[0].url}}>
                 <TouchableOpacity style={styles.prev_img} onPress={this.prev_img}>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.next_img} onPress={this.next_img}>
                 </TouchableOpacity>
               </ImageBackground>
-              <Text>{this.props.name}</Text>
-              <Text>{this.props.id.user.bio}</Text>
-            </View>
+              <View style={styles.modalContent}>
+                <Text style={styles.header}>{this.props.name}</Text>
+                <Text>{this.props.id.user.bio}</Text>
+                <TouchableOpacity onPress={this._storeData}>
+                  <Image style={{width: 60, height: 60}} source={require("../assets/images/buttons/save.png")} />
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
           </View>
         </Modal>
         <TouchableOpacity onPress={() => {this.setModal(true)}}>
@@ -131,6 +159,7 @@ export default class HomeScreen extends React.Component {
     })
       .then(result => result.json())
       .then(json => {
+        console.log(json);
         for (let i = 0; i < json.results.length; i++) {
           tmp_card[i] = {name:json.results[i].user.name, image: json.results[i].user.photos[0].processedFiles[0].url, id: json.results[i]}
         }
@@ -139,7 +168,7 @@ export default class HomeScreen extends React.Component {
   }
 
   handleYup (card) {
-    fetch(`https://api.gotinder.com/like/${card.id}`, {
+    fetch(`https://api.gotinder.com/like/${card.id.user._id}`, {
       credentials: "omit",
       headers: {
         accept: "application/json",
@@ -177,7 +206,7 @@ export default class HomeScreen extends React.Component {
 
   handleNope (card) {
     console.log("nope")
-    fetch(`https://api.gotinder.com/pass/${card.id}`, {
+    fetch(`https://api.gotinder.com/pass/${card.id.user._id}`, {
       credentials: "omit",
       headers: {
         accept: "application/json",
@@ -275,8 +304,8 @@ export default class HomeScreen extends React.Component {
 
           renderCard={(cardData) => <Card {...cardData} />}
           renderNoMoreCards={() => <NoMoreCards />}
-          showYup={false}
-          showNope={false}
+          showYup={true}
+          showNope={true}
 
           handleYup={this.handleYup}
           handleNope={this.handleNope}
@@ -357,4 +386,12 @@ const styles = StyleSheet.create({
     width: '50%',
     height: '100%',
   },
+  header: {
+    fontWeight: "bold",
+    fontSize: 30,
+  },
+  modalContent: {
+    paddingLeft: 15,
+    paddingRight: 15,
+  }
 })

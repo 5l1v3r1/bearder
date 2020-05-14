@@ -2,8 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 15250,
-  "expoServerNgrokUrl": "https://3t-8zv.p4p1.bearder.exp.direct",
-  "packagerNgrokUrl": "https://packager.3t-8zv.p4p1.bearder.exp.direct",
-  "ngrokPid": 15442
+  "packagerPid": 31378,
+  "expoServerNgrokUrl": "https://fe-uty.p4p1.bearder.exp.direct",
+  "packagerNgrokUrl": "https://packager.fe-uty.p4p1.bearder.exp.direct",
+  "ngrokPid": 31455,
+  "webpackServerPort": null
 }
