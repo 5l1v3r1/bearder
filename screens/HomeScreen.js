@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {StyleSheet, Text, View, ImageBackground} from 'react-native';
+import {StyleSheet, Text, View, ImageBackground, Modal, TouchableOpacity} from 'react-native';
 
 import SwipeCards from 'react-native-swipe-cards';
 
@@ -10,19 +10,68 @@ import Likes from '../components/card/Likes';
 export class Card extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      modalVisible: false,
+      current_img_id: 0,
+    }
+    this.setModal = this.setModal.bind(this);
+    this.next_img = this.next_img.bind(this);
+    this.prev_img = this.prev_img.bind(this);
+  }
+
+  setModal(val) {
+    this.setState({modalVisible: val});
+    this.setState({current_img_id: 0});
+    console.log(this.props.id);
+  }
+  next_img() {
+    if (this.state.current_img_id < this.props.id.user.photos.length - 1) {
+      this.setState({current_img_id: this.state.current_img_id+1});
+    }
+  }
+  prev_img() {
+    if (this.state.current_img_id > 0) {
+      this.setState({current_img_id: this.state.current_img_id-1});
+    }
   }
 
   render() {
     return (
-      <View style={styles.card}>
-        <ImageBackground style={styles.thumbnail} source={{uri: this.props.image}}>
-          <Text style={styles.text}>{this.props.name}</Text>
-        </ImageBackground>
+      <View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            this.setModal(false);
+          }}
+        >
+          <View style={styles.containerModal}>
+            <View style={styles.Modal}>
+              <ImageBackground style={styles.thumbnailModal} source={{uri: this.props.id.user.photos[this.state.current_img_id].processedFiles[0].url}}>
+                <TouchableOpacity style={styles.prev_img} onPress={this.prev_img}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.next_img} onPress={this.next_img}>
+                </TouchableOpacity>
+              </ImageBackground>
+              <Text>{this.props.name}</Text>
+              <Text>{this.props.id.user.bio}</Text>
+            </View>
+          </View>
+        </Modal>
+        <TouchableOpacity onPress={() => {this.setModal(true)}}>
+          <View style={styles.card}>
+            <ImageBackground style={styles.thumbnail} source={{uri: this.props.image}}>
+              <Text style={styles.text}>{this.props.name}</Text>
+            </ImageBackground>
+          </View>
+        </TouchableOpacity>
       </View>
     )
   }
 }
 
+//test-id:5e97320b1b3176010061f38c
 export class NoMoreCards extends React.Component {
   constructor(props) {
     super(props);
@@ -38,30 +87,11 @@ export class NoMoreCards extends React.Component {
   }
 }
 
-const cards = [
-  {name: 'test', image: 'https://media.giphy.com/media/GfXFVHUzjlbOg/giphy.gif', id:'1'},
-  {name: '2', image: 'https://media.giphy.com/media/irTuv1L1T34TC/giphy.gif', id:'1'},
-  {name: '3', image: 'https://media.giphy.com/media/LkLL0HJerdXMI/giphy.gif', id:'1'},
-  {name: '4', image: 'https://media.giphy.com/media/fFBmUMzFL5zRS/giphy.gif', id:'1'},
-  {name: '5', image: 'https://media.giphy.com/media/oDLDbBgf0dkis/giphy.gif', id:'1'},
-  {name: '6', image: 'https://media.giphy.com/media/7r4g8V2UkBUcw/giphy.gif', id:'1'},
-  {name: '7', image: 'https://media.giphy.com/media/K6Q7ZCdLy8pCE/giphy.gif', id:'1'},
-  {name: '8', image: 'https://media.giphy.com/media/hEwST9KM0UGti/giphy.gif', id:'1'},
-  {name: '9', image: 'https://media.giphy.com/media/3oEduJbDtIuA2VrtS0/giphy.gif', id:'1'},
-]
-
-const cards2 = [
-  {name: '10', image: 'https://media.giphy.com/media/12b3E4U9aSndxC/giphy.gif', id:'1'},
-  {name: '11', image: 'https://media4.giphy.com/media/6csVEPEmHWhWg/200.gif', id:'1'},
-  {name: '12', image: 'https://media4.giphy.com/media/AA69fOAMCPa4o/200.gif', id:'1'},
-  {name: '13', image: 'https://media.giphy.com/media/OVHFny0I7njuU/giphy.gif', id:'1'},
-]
-
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: cards,
+      cards: undefined,
       outOfCards: false,
       match: false,
     }
@@ -102,7 +132,7 @@ export default class HomeScreen extends React.Component {
       .then(result => result.json())
       .then(json => {
         for (let i = 0; i < json.results.length; i++) {
-          tmp_card[i] = {name:json.results[i].user.name, image: json.results[i].user.photos[0].processedFiles[0].url, id: json.results[i].user._id}
+          tmp_card[i] = {name:json.results[i].user.name, image: json.results[i].user.photos[0].processedFiles[0].url, id: json.results[i]}
         }
         this.setState({cards: tmp_card});
       });
@@ -219,7 +249,7 @@ export default class HomeScreen extends React.Component {
         .then(result => result.json())
         .then(json => {
           for (let i = 0; i < json.results.length; i++) {
-            tmp_card[i] = {name:json.results[i].user.name, image: json.results[i].user.photos[0].processedFiles[0].url, id: json.results[i].user._id}
+            tmp_card[i] = {name:json.results[i].user.name, image: json.results[i].user.photos[0].processedFiles[0].url, data: json.results[i]}
           }
           this.setState({cards: tmp_card});
         });
@@ -288,11 +318,18 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: 300,
     height: 450,
+    flexDirection: 'row',
+  },
+  thumbnailModal: {
+    width: '100%',
+    height: 450,
+    flexDirection: 'row',
   },
   text: {
     color: '#c70082',
     fontWeight: "bold",
     fontSize: 20,
+    width: '100%'
   },
   noMoreCards: {
     flex: 1,
@@ -302,5 +339,22 @@ const styles = StyleSheet.create({
   swiper: {
     height: 500,
     backgroundColor: 'green',
-  }
+  },
+  Modal : {
+    width: '80%',
+    height: '90%',
+    backgroundColor: '#c70082',
+  },
+  containerModal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  next_img: {
+    width: '50%',
+    height: '100%',
+  },
+  prev_img: {
+    width: '50%',
+    height: '100%',
+  },
 })

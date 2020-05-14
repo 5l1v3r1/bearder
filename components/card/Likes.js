@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView} from 'react-native';
+import { StyleSheet, Modal, Text, View, ImageBackground, ScrollView, TouchableOpacity } from 'react-native';
 
 class Person extends React.Component
 {
@@ -8,10 +8,16 @@ class Person extends React.Component
   }
 
   render() {
+    let data=<View></View>;
+    if (this.props.info.user.recently_active){
+      data=<View style={styles.CircleShapeView}></View>;
+    }
+
     return (
       <View>
-        <Image style={styles.thumbnail} source={{uri: this.props.url}} />
-        <Text>HERE</Text>
+        <ImageBackground style={styles.thumbnail} source={{uri: this.props.url}}>
+          {data}
+        </ImageBackground>
       </View>
     );
   }
@@ -63,10 +69,10 @@ export default  class Likes extends React.Component
   }
 
   render() {
-    var data;
-    if (this.state.data != undefined) {
+    var data=<Text style={styles.loner}>No one yet...</Text>;;
+    if (this.state.data != undefined && this.state.data.length > 0) {
       data=this.state.data.map((item) => {
-              return(<Person url={item.user.photos[0].processedFiles[0].url}/>);
+              return(<Person url={item.user.photos[0].processedFiles[0].url} info={item} />);
             });
     }
     return (
@@ -85,10 +91,23 @@ const styles = StyleSheet.create({
     height: 150,
     position: 'absolute',
     bottom: '10%',
-    backgroundColor: 'green',
+    backgroundColor: '#c70082',
   },
   thumbnail: {
     width: 100,
     height: 150,
-  }
+  },
+  loner: {
+    width: 100,
+    fontWeight: "bold",
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  CircleShapeView: {
+        width: 10,
+        height: 10,
+        borderRadius: 150/2,
+        backgroundColor: '#00BCD4'
+  },
 });
