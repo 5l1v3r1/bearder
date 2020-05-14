@@ -5,8 +5,10 @@ import {StyleSheet, Text, AsyncStorage, View, Image, ImageBackground, Modal, Tou
 
 import SwipeCards from 'react-native-swipe-cards';
 
-
 import Likes from '../components/card/Likes';
+import Saved from '../components/card/Saved';
+import Yup from '../components/card/Yup';
+import Nop from '../components/card/Nop';
 
 export class Card extends React.Component {
   constructor(props) {
@@ -39,23 +41,15 @@ export class Card extends React.Component {
   _storeData = async () => {
     try {
       await AsyncStorage.setItem(
-        `@${this.props.name}`,
-        this.props.id
+        this.props.name,
+        JSON.stringify(this.props.id)
       );
     } catch (error) {
       // Error saving data
+      console.log("fuck");
       console.log(error);
     }
-    try {
-      const value = await AsyncStorage.getItem(this.props.name);
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
-      }
-    } catch (error) {
-      // Error retrieving data
-      console.log("Fuck2");
-    }
+
   };
 
   render() {
@@ -205,7 +199,6 @@ export default class HomeScreen extends React.Component {
   }
 
   handleNope (card) {
-    console.log("nope")
     fetch(`https://api.gotinder.com/pass/${card.id.user._id}`, {
       credentials: "omit",
       headers: {
@@ -295,25 +288,32 @@ export default class HomeScreen extends React.Component {
       mdr = <View style={styles.banner2}></View>;
     }
     return (
-      <View style={styles.container}>
-        {mdr}
-        <SwipeCards
-          stack={true}
-          cards={this.state.cards}
-          loop={false}
+        <ScrollView style={styles.container}>
+          {mdr}
+          <View style={styles.swiper}>
+            <SwipeCards
+              stack={true}
+              cards={this.state.cards}
+              loop={false}
 
-          renderCard={(cardData) => <Card {...cardData} />}
-          renderNoMoreCards={() => <NoMoreCards />}
-          showYup={true}
-          showNope={true}
+              renderCard={(cardData) => <Card {...cardData} />}
+              renderNoMoreCards={() => <NoMoreCards />}
+              showYup={true}
+              yupView={<Yup />}
+              showNope={true}
+              noView={<Nop />}
+              dragY={false}
 
-          handleYup={this.handleYup}
-          handleNope={this.handleNope}
-          cardRemoved={this.cardRemoved.bind(this)}
-          containerStyle={this.swiper}
-        />
-        <Likes />
-      </View>
+              handleYup={this.handleYup}
+              handleNope={this.handleNope}
+              cardRemoved={this.cardRemoved.bind(this)}
+            />
+          </View>
+          <Text style={styles.main_header}>People that liked you:</Text>
+          <Likes />
+          <Text style={styles.main_header}>People that you saved:</Text>
+          <Saved />
+        </ScrollView>
     )
   }
 }
@@ -367,7 +367,6 @@ const styles = StyleSheet.create({
   },
   swiper: {
     height: 500,
-    backgroundColor: 'green',
   },
   Modal : {
     width: '80%',
@@ -393,5 +392,11 @@ const styles = StyleSheet.create({
   modalContent: {
     paddingLeft: 15,
     paddingRight: 15,
+  },
+  main_header: {
+    color: 'white',
+    fontWeight: "bold",
+    fontSize: 15,
+    marginTop: 15,
   }
 })

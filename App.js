@@ -49,9 +49,9 @@ export default class App extends React.Component
   }
 
   render() {
-    console.log("global.tinder_data");
+    console.log("global.tinder_data:");
     console.log(global.tinder_data);
-    console.log("global.xauth");
+    console.log("global.xauth:");
     console.log(global.xauth);
     if (this.state.tinder_working === false) {
       return (
@@ -63,7 +63,7 @@ export default class App extends React.Component
     return (
       <View style={styles.container}>
         {
-          (global.xauth == undefined || global.tinder_data == undefined) ?
+          (global.xauth == undefined && global.tinder_data == undefined) ?
             <LoginScreen refresh={this.refreshMe}/> :
             <HomeScreen refresh={this.refreshMe} />
         }

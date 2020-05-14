@@ -89,8 +89,8 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: 150,
-    position: 'absolute',
-    bottom: '10%',
+    //position: 'absolute',
+    //bottom: '10%',
     backgroundColor: '#c70082',
   },
   thumbnail: {
