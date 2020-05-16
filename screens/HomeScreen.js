@@ -9,6 +9,7 @@ import Likes from '../components/card/Likes';
 import Saved from '../components/card/Saved';
 import Yup from '../components/card/Yup';
 import Nop from '../components/card/Nop';
+import Messages from '../components/messages/messages';
 
 export class Card extends React.Component {
   constructor(props) {
@@ -313,6 +314,8 @@ export default class HomeScreen extends React.Component {
           <Likes />
           <Text style={styles.main_header}>People that you saved:</Text>
           <Saved />
+          <Text style={styles.main_header}>Messages:</Text>
+          <Messages />
         </ScrollView>
     )
   }
