@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 29379,
-  "expoServerNgrokUrl": "https://az-gia.p4p1.bearder.exp.direct",
-  "packagerNgrokUrl": "https://packager.az-gia.p4p1.bearder.exp.direct",
-  "ngrokPid": 29668,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
