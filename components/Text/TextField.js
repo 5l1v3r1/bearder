@@ -6,18 +6,26 @@ export default class TextField extends React.Component
   constructor(props) {
     super(props);
     this.state = {
-      type: 'default'
+      type: 'default',
+      style: styles.container,
+      styleText: styles.input,
     };
 
     if (this.props.type !== undefined) {
       this.state.type = this.props.type;
     }
+    if (this.props.style !== undefined) {
+      this.state.style = this.props.style;
+    }
+    if (this.props.styleText !== undefined) {
+      this.state.styleText = this.props.styleText;
+    }
   }
 
   render() {
     return (
-        <View style={styles.container}>
-          <TextInput style={styles.input}
+        <View style={this.state.style}>
+          <TextInput style={this.state.styleText}
             onChangeText={this.props.run}
             placeholder={this.props.text}
             keyboardType={this.state.type}
