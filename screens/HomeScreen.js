@@ -273,8 +273,8 @@ export default class HomeScreen extends React.Component {
         .then(json => {
           for (let i = 0; i < json.results.length; i++) {
             tmp_card[i] = {name:json.results[i].user.name, image: json.results[i].user.photos[0].processedFiles[0].url, data: json.results[i]}
+            this.setState({cards: [...this.state.cards, tmp_card[i]]});
           }
-          this.setState({cards: tmp_card});
         });
 
     }
