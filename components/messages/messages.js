@@ -84,6 +84,9 @@ class Msg extends React.Component
   }
 
   render () {
+    if (this.props.id.person == undefined) {
+      return (<View></View>);
+    }
     return (
       <View>
         <Modal
@@ -96,7 +99,7 @@ class Msg extends React.Component
           <View style={styles.modal}>
             <ScrollView>
               {this.props.id.messages.map((msg) => {
-                if (this.props.id.person._id == msg.from) {
+                if (this.props.id.person && this.props.id.person._id == msg.from) {
                   if (isURL(msg.message)){
                     return (<Image style={styles.msgFromImage} source={{uri: msg.message}} />);
                   } else {

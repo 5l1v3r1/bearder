@@ -54,6 +54,9 @@ export class Card extends React.Component {
   };
 
   render() {
+    if (this.props.id == undefined) {
+      return (<View></View>);
+    }
     return (
       <View>
         <Modal
@@ -117,10 +120,18 @@ export default class HomeScreen extends React.Component {
       cards: undefined,
       outOfCards: false,
       match: false,
+      lastRefresh: Date(Date.now()).toString(),
     }
 
     this.handleYup = this.handleYup.bind(this);
+    this.refreshme = this.refreshme.bind(this);
   }
+
+  refreshme() {
+     this.setState({ lastRefresh: Date(Date.now()).toString() })
+    console.log('yo');
+  }
+
   componentDidMount() {
     var tmp_card = [];
     fetch("https://api.gotinder.com/recs", {
@@ -271,6 +282,8 @@ export default class HomeScreen extends React.Component {
       })
         .then(result => result.json())
         .then(json => {
+          console.log("HERER");
+          this.setState({cards: [ ]});
           for (let i = 0; i < json.results.length; i++) {
             tmp_card[i] = {name:json.results[i].user.name, image: json.results[i].user.photos[0].processedFiles[0].url, data: json.results[i]}
             this.setState({cards: [...this.state.cards, tmp_card[i]]});
@@ -290,7 +303,9 @@ export default class HomeScreen extends React.Component {
     }
     return (
         <ScrollView style={styles.container}>
-          {mdr}
+          <TouchableOpacity style={styles.banner} onPress={this.refreshme}>
+            {mdr}
+          </TouchableOpacity>
           <View style={styles.swiper}>
             <SwipeCards
               stack={true}

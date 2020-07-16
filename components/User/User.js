@@ -31,6 +31,9 @@ export default  class User extends React.Component
   }
 
   render() {
+    if (this.props.id.person == undefined) {
+      return (<View></View>);
+    }
     return (
       <View>
         <Modal
